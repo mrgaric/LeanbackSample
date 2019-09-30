@@ -7,10 +7,13 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
 fun Context.getColorRes(@ColorRes id: Int) =
-		ContextCompat.getColor(this, id)
+	ContextCompat.getColor(this, id)
 
 fun Context.getDrawableRes(@DrawableRes id: Int) =
 	ContextCompat.getDrawable(this, id)
 
 fun Context.getDimensionPixelSizeRes(@DimenRes id: Int) =
 	this.resources.getDimensionPixelSize(id)
+
+fun Context.getDimensionRes(@DimenRes id: Int) =
+	this.resources.getDimension(id)
