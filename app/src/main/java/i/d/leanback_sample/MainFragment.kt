@@ -1,6 +1,7 @@
 package i.d.leanback_sample
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.leanback.app.BrowseSupportFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.DividerRow
@@ -12,9 +13,15 @@ import i.d.leanback_sample.brows.GridListRow
 import i.d.leanback_sample.brows.GridListRowPresenter
 import i.d.leanback_sample.brows.IconHeaderItem
 import i.d.leanback_sample.brows.IconRowHeaderPresenter
+import i.d.leanback_sample.brows.ListRowsFragment
 import i.d.leanback_sample.brows.TextPresenter
 
 class MainFragment : BrowseSupportFragment() {
+
+    private val listRowFragmentFactory = object : FragmentFactory<Fragment>() {
+        override fun createFragment(row: Any): Fragment =
+            ListRowsFragment.newInstance()
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -29,14 +36,22 @@ class MainFragment : BrowseSupportFragment() {
 
         setHeaderPresenterSelector(object : PresenterSelector() {
             val presenter = IconRowHeaderPresenter()
-            val oldPresenterSelector = headersSupportFragment.presenterSelector
+            val defaultPresenterSelector = headersSupportFragment.presenterSelector
             override fun getPresenter(data: Any): Presenter {
                 return if ((data as? Row)?.headerItem is IconHeaderItem)
                     presenter
                 else
-                    oldPresenterSelector.getPresenter(data)
+                    defaultPresenterSelector.getPresenter(data)
             }
         })
+
+        setupList()
+
+    }
+
+    private fun setupList() {
+
+        mainFragmentRegistry.registerFragment(GridListRow::class.java, listRowFragmentFactory)
 
         val browseAdapter = ArrayObjectAdapter(GridListRowPresenter())
 
@@ -65,6 +80,8 @@ class MainFragment : BrowseSupportFragment() {
         browseAdapter.add(DividerRow())
         browseAdapter.add(GridListRow(thirdHeader, rowsAdapter, 4))
         browseAdapter.add(SectionRow("Подзаголовок 1"))
+
+        browseAdapter.add(GridListRow(thirdHeader, rowsAdapter, 5))
 
         adapter = browseAdapter
 
