@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.leanback.app.BrowseSupportFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.DividerRow
+import androidx.leanback.widget.PageRow
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.PresenterSelector
 import androidx.leanback.widget.Row
@@ -14,6 +15,7 @@ import i.d.leanback_sample.brows.GridListRowPresenter
 import i.d.leanback_sample.brows.IconHeaderItem
 import i.d.leanback_sample.brows.IconRowHeaderPresenter
 import i.d.leanback_sample.brows.ListRowsFragment
+import i.d.leanback_sample.brows.PageRowsFragment
 import i.d.leanback_sample.brows.TextPresenter
 
 class MainFragment : BrowseSupportFragment() {
@@ -21,6 +23,16 @@ class MainFragment : BrowseSupportFragment() {
     private val listRowFragmentFactory = object : FragmentFactory<Fragment>() {
         override fun createFragment(row: Any): Fragment =
             ListRowsFragment.newInstance()
+    }
+
+    private val pageRowFragmentFactory = object : FragmentFactory<Fragment>() {
+        override fun createFragment(row: Any): Fragment? =
+            (row as? PageRow)
+                ?.headerItem
+                ?.id
+                ?.let {
+                    PageRowsFragment.newInstance(it)
+                }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,7 +57,7 @@ class MainFragment : BrowseSupportFragment() {
             }
         })
 
-        setupList()
+        setupPage()
 
     }
 
@@ -81,7 +93,26 @@ class MainFragment : BrowseSupportFragment() {
         browseAdapter.add(GridListRow(thirdHeader, rowsAdapter, 4))
         browseAdapter.add(SectionRow("Подзаголовок 1"))
 
-        browseAdapter.add(GridListRow(thirdHeader, rowsAdapter, 5))
+        adapter = browseAdapter
+
+    }
+
+    private fun setupPage() {
+
+        mainFragmentRegistry.registerFragment(PageRow::class.java, pageRowFragmentFactory)
+
+        val browseAdapter = ArrayObjectAdapter(GridListRowPresenter())
+
+        val firstHeader = IconHeaderItem("Заголовок 1", 1, R.drawable.ic_header_item)
+        val secondHeader = IconHeaderItem("Заголовок 2", 2, R.drawable.ic_header_item)
+        val thirdHeader = IconHeaderItem("Заголовок 3", 3, R.drawable.ic_header_item)
+
+        browseAdapter.add(PageRow(firstHeader))
+        browseAdapter.add(DividerRow())
+        browseAdapter.add(PageRow(secondHeader))
+        browseAdapter.add(DividerRow())
+        browseAdapter.add(PageRow(thirdHeader))
+        browseAdapter.add(SectionRow("Подзаголовок 1"))
 
         adapter = browseAdapter
 
