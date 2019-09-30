@@ -1,6 +1,8 @@
 package i.d.leanback_sample.cards.leanback
 
+import android.view.ContextThemeWrapper
 import android.view.ViewGroup
+import androidx.leanback.widget.BaseCardView
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
@@ -17,7 +19,7 @@ class LeanbackCardPresenter : Presenter() {
 		viewGroup
 			.context
 			.let { context ->
-				ImageCardView(context)
+				ImageCardView(ContextThemeWrapper(context, R.style.ImageCardTheme))
 					.apply {
 						isFocusable = true
 						isFocusableInTouchMode = true
@@ -25,6 +27,7 @@ class LeanbackCardPresenter : Presenter() {
 							context.getDimensionPixelSizeRes(R.dimen.card_width),
 							context.getDimensionPixelSizeRes(R.dimen.card_height)
 						)
+						cardType = BaseCardView.CARD_TYPE_INFO_OVER
 					}
 			}
 
