@@ -2,6 +2,11 @@ package i.d.leanback_sample
 
 import android.os.Bundle
 import androidx.leanback.app.BrowseSupportFragment
+import androidx.leanback.widget.ArrayObjectAdapter
+import androidx.leanback.widget.HeaderItem
+import androidx.leanback.widget.ListRow
+import androidx.leanback.widget.ListRowPresenter
+import i.d.leanback_sample.brows.TextPresenter
 
 class MainFragment : BrowseSupportFragment() {
 
@@ -11,7 +16,28 @@ class MainFragment : BrowseSupportFragment() {
     }
 
     private fun initView(savedInstanceState: Bundle?) {
-        title = "Finch"
-    }
 
+        headersState = HEADERS_HIDDEN
+
+        title = "Finch"
+
+        val browseAdapter = ArrayObjectAdapter(ListRowPresenter())
+
+        val rowsAdapter = ArrayObjectAdapter(TextPresenter())
+
+        rowsAdapter.add("Элемент 1")
+        rowsAdapter.add("Элемент 2")
+        rowsAdapter.add("Элемент 3")
+
+        val firstHeader = HeaderItem("Заголовок 1")
+        val secondHeader = HeaderItem("Заголовок 2")
+        val thirdHeader = HeaderItem("Заголовок 3")
+
+        browseAdapter.add(ListRow(firstHeader, rowsAdapter))
+        browseAdapter.add(ListRow(secondHeader, rowsAdapter))
+        browseAdapter.add(ListRow(thirdHeader, rowsAdapter))
+
+        adapter = browseAdapter
+
+    }
 }
