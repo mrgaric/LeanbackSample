@@ -61,7 +61,7 @@ class LeanbackCardPresenter : Presenter() {
 			mainImage = null
 			badgeImage = null
 			titleText = ""
-			contentDescription = ""
+			contentText = ""
 		}
 	}
 }

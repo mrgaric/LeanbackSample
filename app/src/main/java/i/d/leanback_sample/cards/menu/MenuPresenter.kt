@@ -1,9 +1,9 @@
 package i.d.leanback_sample.cards.menu
 
 import android.view.ViewGroup
-import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import i.d.leanback_sample.R
+import i.d.leanback_sample.extensions.getColorRes
 import i.d.leanback_sample.extensions.getDimensionPixelSizeRes
 
 class MenuPresenter : Presenter() {
@@ -15,14 +15,13 @@ class MenuPresenter : Presenter() {
 		viewGroup
 			.context
 			.let { context ->
-				ImageCardView(context)
+				MenuView(context)
 					.apply {
-						isFocusable = true
-						isFocusableInTouchMode = true
-						setMainImageDimensions(
+						layoutParams = ViewGroup.LayoutParams(
 							context.getDimensionPixelSizeRes(R.dimen.menu_item_width),
 							context.getDimensionPixelSizeRes(R.dimen.menu_item_height)
 						)
+						setBackgroundColor(context.getColorRes(R.color.menu_item_background))
 					}
 			}
 
@@ -34,20 +33,18 @@ class MenuPresenter : Presenter() {
 		(viewHolder as ViewHolder)
 			.unbind()
 
-	private inner class ViewHolder(view: ImageCardView) : Presenter.ViewHolder(view) {
+	private inner class ViewHolder(view: MenuView) : Presenter.ViewHolder(view) {
 
-		fun bind(item: MenuItem) = with(view as ImageCardView) {
+		fun bind(item: MenuItem) = with(view as MenuView) {
 			item.run {
-				mainImage = view.context.getDrawable(icon)
 				titleText = title
+				iconId = icon
 			}
 		}
 
-		fun unbind() = with(view as ImageCardView) {
-			mainImage = null
-			badgeImage = null
+		fun unbind() = with(view as MenuView) {
 			titleText = ""
-			contentDescription = ""
+			iconId = 0
 		}
 	}
 }
