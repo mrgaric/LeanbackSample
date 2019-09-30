@@ -9,6 +9,8 @@ import androidx.leanback.widget.ListRowPresenter
 import i.d.leanback_sample.cards.TitleHeaderPresenter
 import i.d.leanback_sample.cards.leanback.LeanbackCardItem
 import i.d.leanback_sample.cards.leanback.LeanbackCardPresenter
+import i.d.leanback_sample.cards.menu.MenuItem
+import i.d.leanback_sample.cards.menu.MenuPresenter
 import i.d.leanback_sample.extensions.getDimensionPixelSizeRes
 import i.d.leanback_sample.extensions.getDimensionRes
 
@@ -16,9 +18,17 @@ class MainFragment : RowsSupportFragment() {
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		initViewWithLeanbackCard(savedInstanceState)
+		//initViewWithLeanbackCard(savedInstanceState)
+		initViewWithMenuCard(savedInstanceState)
 		setOnItemViewClickedListener { _, _, _, _ -> }
 	}
+
+	private fun initViewWithMenuCard(savedInstanceState: Bundle?) {
+		val cardAdapter = ArrayObjectAdapter(MenuPresenter())
+		cardAdapter.addAll(0, getMenuCardItems())
+		setCardAdapter(cardAdapter)
+	}
+
 
 	private fun initViewWithLeanbackCard(savedInstanceState: Bundle?) {
 		val cardAdapter = ArrayObjectAdapter(LeanbackCardPresenter())
@@ -44,6 +54,26 @@ class MainFragment : RowsSupportFragment() {
 					)
 				}
 			}
+
+	private fun getMenuCardItems(): List<MenuItem> =
+		listOf(
+			MenuItem(
+				title = "profile",
+				icon = R.drawable.ic_tag_faces_black_24dp
+			),
+			MenuItem(
+				title = "subscriptions",
+				icon = R.drawable.ic_subscriptions_black_24dp
+			),
+			MenuItem(
+				title = "history",
+				icon = R.drawable.ic_history_black_24dp
+			),
+			MenuItem(
+				title = "settings",
+				icon = R.drawable.ic_settings_black_24dp
+			)
+		)
 
 	private fun getLeanbackCardItems(): List<LeanbackCardItem> =
 		listOf(
