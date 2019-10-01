@@ -19,13 +19,13 @@ class MainFragment : RowsSupportFragment() {
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		//initViewWithLeanbackCard(savedInstanceState)
-		initViewWithMenuCard(savedInstanceState)
+		initViewWithMenu(savedInstanceState)
 		setOnItemViewClickedListener { _, _, _, _ -> }
 	}
 
-	private fun initViewWithMenuCard(savedInstanceState: Bundle?) {
+	private fun initViewWithMenu(savedInstanceState: Bundle?) {
 		val cardAdapter = ArrayObjectAdapter(MenuPresenter())
-		cardAdapter.addAll(0, getMenuCardItems())
+		cardAdapter.addAll(0, getMenuItems())
 		setCardAdapter(cardAdapter)
 	}
 
@@ -55,7 +55,7 @@ class MainFragment : RowsSupportFragment() {
 				}
 			}
 
-	private fun getMenuCardItems(): List<MenuItem> =
+	private fun getMenuItems(): List<MenuItem> =
 		listOf(
 			MenuItem(
 				title = "profile",
