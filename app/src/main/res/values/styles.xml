@@ -11,4 +11,9 @@
         <item name="imageCardViewStyle">@style/ImageCardViewStyle</item>
     </style>
 
+    <style name="MenuCardViewStyle" parent="Widget.Leanback.BaseCardViewStyle">
+        <item name="cardType">infoOver</item>
+        <item name="infoVisibility">selected</item>
+    </style>
+
 </resources>

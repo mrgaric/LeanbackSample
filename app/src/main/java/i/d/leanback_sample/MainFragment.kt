@@ -9,6 +9,8 @@ import androidx.leanback.widget.ListRowPresenter
 import i.d.leanback_sample.cards.TitleHeaderPresenter
 import i.d.leanback_sample.cards.leanback.LeanbackCardItem
 import i.d.leanback_sample.cards.leanback.LeanbackCardPresenter
+import i.d.leanback_sample.cards.menu.MenuCardItem
+import i.d.leanback_sample.cards.menu.MenuCardPresenter
 import i.d.leanback_sample.cards.menu.MenuItem
 import i.d.leanback_sample.cards.menu.MenuPresenter
 import i.d.leanback_sample.extensions.getDimensionPixelSizeRes
@@ -19,8 +21,15 @@ class MainFragment : RowsSupportFragment() {
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		//initViewWithLeanbackCard(savedInstanceState)
-		initViewWithMenu(savedInstanceState)
+		//initViewWithMenu(savedInstanceState)
+		initViewWithMenuCard(savedInstanceState)
 		setOnItemViewClickedListener { _, _, _, _ -> }
+	}
+
+	private fun initViewWithMenuCard(savedInstanceState: Bundle?) {
+		val cardAdapter = ArrayObjectAdapter(MenuCardPresenter())
+		cardAdapter.addAll(0, getMenuCardItems())
+		setCardAdapter(cardAdapter)
 	}
 
 	private fun initViewWithMenu(savedInstanceState: Bundle?) {
@@ -28,7 +37,6 @@ class MainFragment : RowsSupportFragment() {
 		cardAdapter.addAll(0, getMenuItems())
 		setCardAdapter(cardAdapter)
 	}
-
 
 	private fun initViewWithLeanbackCard(savedInstanceState: Bundle?) {
 		val cardAdapter = ArrayObjectAdapter(LeanbackCardPresenter())
@@ -54,6 +62,30 @@ class MainFragment : RowsSupportFragment() {
 					)
 				}
 			}
+
+	private fun getMenuCardItems(): List<MenuCardItem> =
+		listOf(
+			MenuCardItem(
+				title = "profile",
+				description = "profile description",
+				icon = R.drawable.ic_tag_faces_black_24dp
+			),
+			MenuCardItem(
+				title = "subscriptions",
+				description = "subscriptions description",
+				icon = R.drawable.ic_subscriptions_black_24dp
+			),
+			MenuCardItem(
+				title = "history",
+				description = "history description",
+				icon = R.drawable.ic_history_black_24dp
+			),
+			MenuCardItem(
+				title = "settings",
+				description = "settings description",
+				icon = R.drawable.ic_settings_black_24dp
+			)
+		)
 
 	private fun getMenuItems(): List<MenuItem> =
 		listOf(
